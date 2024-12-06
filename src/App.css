@@ -5,133 +5,142 @@
 
 .container {
   width: 100%;
-  padding-inline: 1rem;
-  background-color: #121212; /* Dark background for the container */
-  color: #fff; /* White text color for contrast */
   padding: 20px;
+  background-color: #f4f4f9; /* Light background for the container */
+  color: #333; /* Dark text color for readability */
   border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle container shadow */
+}
+
+.heading {
+  font-family: 'Roboto', sans-serif;
+  background-color: #a8d5ba; /* Pastel green background for the header */
+  color: #006400; /* Dark green text for the heading */
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 2rem;
 }
 
 .upload-form {
   display: flex;
-  flex-direction: row;
-  gap: 10px;
-  width: fit-content;
-  text-align: center;
-  background-color: #1b1b1b; /* Darker background for the form */
-  padding: 10px;
-  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background-color: #ffffff; /* Light background for the form */
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #4caf50; /* Green border to emphasize form */
 }
 
 .upload-form_inputs {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 1rem;
+  gap: 15px;
 }
 
 .upload-form_inputs > label {
   font-size: 2.5rem;
-  color: #006400; /* Dark green color */
+  color: #33cc33; /* Bright green for upload icon */
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
 }
 
 .upload-form_inputs > label:hover {
+  color: #28a428; /* Slightly darker hover green */
+}
+
+.upload-btn {
+  background-color: #4caf50; /* Green button */
+  color: #fff; /* White text */
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  color: #004d00; /* Darker green on hover */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.upload-btn:hover {
+  background-color: #388e3c; /* Slightly darker green on hover */
 }
 
 .upload-form_display {
-  width: 70%;
-  align-items: center;
-  padding: 2rem;
-}
-
-.upload-form_inputs > select {
-  width: 30%;
-  height: 2rem;
-  border: 1px solid #888;
-  border-radius: 5px;
-  padding: 0.5rem;
-  outline: none;
-}
-
-.displayImg {
   width: 100%;
-  height: 100%;
-  border-radius: 2rem;
-  object-fit: contain;
-}
-
-.row-form {
-  width: 100%;
-}
-
-.row-display {
-  margin-top: 1rem;
-  border-top: 2px solid #888;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-}
-
-.card {
-  width: 380px;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 1rem;
-  border: 1px solid #888;
-  border-radius: 5px;
-  margin-top: 1rem;
-  background-color: #1b1b1b; /* Dark background for the card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for card */
-  transition: transform 0.3s;
-}
-
-.card:hover {
-  transform: scale(1.05); /* Hover effect to enlarge card */
-}
-
-.card > img {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  object-fit: contain;
-}
-
-.card-title {
-  font-size: 1.2rem;
-  color: #fff;
-  margin-top: 10px;
   text-align: center;
 }
 
-.del {
-  background-color: #ff6347; /* Red color for delete button */
-  color: white;
-  width: fit-content;
-  font-size: larger;
-  padding: 0.3rem 0.4rem;
-  border-radius: 50%;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.displayImg {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid #33cc33; /* Bright green border for emphasis */
 }
 
-.del:hover {
-  background-color: #ff4500; /* Darker red on hover */
+.row-display {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background-color: #ffffff; /* Light card background */
+  color: #333; /* Dark text for readability */
+  width: 280px;
+  border: 2px solid #4caf50; /* Green border for cards */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Card shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Subtle lift effect on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 2px solid #33cc33; /* Bright green accent */
+}
+
+.card-title {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 10px;
+  color: #333; /* Dark text for card titles */
+}
+
+.del-btn {
+  background-color: #ff6666; /* Soft red for delete button */
   color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.del-btn:hover {
+  background-color: #cc0000; /* Slightly darker red on hover */
 }
 
 hr {
-  border: 1px solid #444;
+  border: 1px solid #ddd; /* Subtle divider */
   margin: 20px 0;
 }
 
+/* Loading Component */
+.loading {
+  color: #33cc33; /* Green spinner color */
+  font-size: 1.5rem;
+  text-align: center;
+}

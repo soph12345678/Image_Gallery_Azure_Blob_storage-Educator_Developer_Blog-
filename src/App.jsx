@@ -10,23 +10,18 @@ const App = () => {
   const [file, setFile] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [fileList, setFileList] = useState([]);
 
   // Azure Storage credentials
   const account = import.meta.env.VITE_STORAGE_ACCOUNT;
   const sasToken = import.meta.env.VITE_STORAGE_SAS;
   const containerName = import.meta.env.VITE_STORAGE_CONTAINER;
+
   const blobServiceClient = new BlobServiceClient(
     `https://${account}.blob.core.windows.net/?${sasToken}`
   );
   const containerClient = blobServiceClient.getContainerClient(containerName);
 
-  const RAAURI =
-    "https://prod-10.northcentralus.logic.azure.com/workflows/..."; // Add full RAAURI
-  const DIAURI0 = "https://prod-18.northcentralus.logic.azure.com/..."; // Add full DIAURI
-  const DIAURI1 = "..."; // Add continuation if needed.
-
-  // Fetch all images from Azure Blob Storage
+  // Fetch images from Azure Blob Storage
   const fetchImages = async () => {
     if (!account || !sasToken || !containerName) {
       alert(
@@ -34,6 +29,7 @@ const App = () => {
       );
       return;
     }
+
     try {
       setLoading(true);
       const blobItems = containerClient.listBlobsFlat();
@@ -44,57 +40,57 @@ const App = () => {
       }
       setImageUrls(urls);
     } catch (error) {
-      console.error("Error fetching images:", error);
+      console.error("Error fetching images:", error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  // Save an image to Azure Blob Storage
+  // Upload image to Azure Blob Storage
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file) {
       alert("Please select an image to upload");
       return;
     }
+
     try {
       setLoading(true);
       const blobName = `${new Date().getTime()}-${file.name}`;
       const blobClient = containerClient.getBlockBlobClient(blobName);
+
+      // Upload the file
       await blobClient.uploadData(file, {
         blobHTTPHeaders: { blobContentType: file.type },
       });
+
+      // Fetch updated list of images
       await fetchImages();
+      alert("Image uploaded successfully!");
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error uploading image:", error.message);
     } finally {
       setLoading(false);
+      setFile(null); // Reset the file input
     }
   };
 
-  // Fetch additional file details
-  const getFileList = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(RAAURI);
-      const data = await response.json();
-      setFileList(data);
-    } catch (error) {
-      console.error("Error fetching file list:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Delete a file
+  // Delete an image from Azure Blob Storage
   const handleDelete = async (blobName) => {
+    if (!window.confirm("Are you sure you want to delete this image?")) return;
+
     try {
       setLoading(true);
       const blobClient = containerClient.getBlockBlobClient(blobName);
+
+      // Delete the file
       await blobClient.delete();
+
+      // Fetch updated list of images
       await fetchImages();
+      alert("Image deleted successfully!");
     } catch (error) {
-      console.error("Error deleting image:", error);
+      console.error("Error deleting image:", error.message);
     } finally {
       setLoading(false);
     }
@@ -103,13 +99,12 @@ const App = () => {
   // Fetch images on page load
   useEffect(() => {
     fetchImages();
-    getFileList();
   }, []);
 
   return (
     <div className="container">
       {loading && <Loading />}
-      <h2 className="heading">📸 Image Gallery Azure Blob Storage 📸</h2>
+      <h2 className="heading">📸 My Chronify Gallery 📸</h2>
       <hr />
 
       {/* Upload Form */}
@@ -143,14 +138,14 @@ const App = () => {
         </form>
       </div>
 
-      {/* File List */}
+      {/* Image List */}
       <div className="row-display">
         {imageUrls.length === 0 ? (
           <h3>😐 No Images Found 😐</h3>
         ) : (
           imageUrls.map((blobItem, index) => (
             <div key={index} className="card">
-              <img className="card-img" src={blobItem.url} alt="Blob" />
+              <img className="card-img" src={blobItem.url} alt={blobItem.name} />
               <h3 className="card-title">{blobItem.name}</h3>
               <button
                 className="del-btn"
